@@ -14,13 +14,19 @@ const entryImporterTools = require('./entry-importer-tools')
 
 module.exports = {
   config: {
-    id: 'ludumdare.com',
-    title: 'Ludum Dare legacy site (ludumdare.com)',
+    id: 'http://onehourgamejam.com/',
+    title: 'One Hour Game Jam',
     mode: 'scraping'
   },
   fetchEntryReferences,
   fetchEntryDetails
 }
+
+async function test () {
+  console.log(await fetchEntryReferences('wan'))
+}
+
+test()
 
 async function fetchEntryReferences (profileIdentifier) {
   let profileName
@@ -29,9 +35,10 @@ async function fetchEntryReferences (profileIdentifier) {
   } else {
     profileName = profileIdentifier
   }
+  console.log(profileName)
 
   // Download page
-  let downloadUrl = `http://ludumdare.com/compo/author/${profileName}/`
+  let downloadUrl = `http://onehourgamejam.com/?page=author&author=${profileName}`
   let rawPage
   try {
     rawPage = await download(downloadUrl)
@@ -45,10 +52,10 @@ async function fetchEntryReferences (profileIdentifier) {
   let entryReferences = []
   $('#compo2 td a').each(function (i, elem) {
     // Fetch info
-    let thumbnail = $('img', elem).attr('src')
+    /* let thumbnail = $('img', elem).attr('src')
     let title = $(elem).text()
     let link = $(elem).attr('href').replace('../../', 'http://ludumdare.com/compo/')
-    let eventId = $(elem).attr('href').replace('../../', '').replace(/\/.*/, '')
+    let eventId = $(elem).attr('href').replace('../../', '').replace(/\/.*, '')
     let externalEvent = entryImporterTools.capitalizeAllWords(eventId.replace(/-/g, ' ')).replace('Minild', 'MiniLD')
 
     // Sanitize & store info
@@ -60,7 +67,7 @@ async function fetchEntryReferences (profileIdentifier) {
       importerProperties: {
         externalEvent: forms.sanitizeString(externalEvent)
       }
-    })
+    }) */
   })
 
   return entryReferences
@@ -135,7 +142,6 @@ function eventDate (eventName) {
     'Ludum Dare 34': '2015-12-14',
     'Ludum Dare 35': '2016-04-18',
     'Ludum Dare 36': '2016-08-29',
-    'Ludum Dare 37': '2016-12-11',
 
     'MiniLD 40': '2013-02-29',
     'MiniLD 41': '2013-03-31',

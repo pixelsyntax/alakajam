@@ -55,7 +55,8 @@ const eventService = require('./event-service')
 const importers = [
   require('./entry-importers/itch'),
   require('./entry-importers/ludumdare'),
-  require('./entry-importers/ldjam')
+  require('./entry-importers/ldjam'),
+  require('./entry-importers/1hgj')
 ]
 
 module.exports = {
